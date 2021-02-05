@@ -5,9 +5,7 @@ const todos = [
   { id: 3, text: 'Todo 3' },
 ];
 const server = http.createServer((req, res) => {
-  res.writeHead(404, {
-    'Content-type': 'application/json',
-  });
+  const { method, url } = req;
   let body = [];
   req
     .on('data', (chunk) => {
@@ -15,16 +13,39 @@ const server = http.createServer((req, res) => {
     })
     .on('end', () => {
       body = Buffer.concat(body).toString();
-      console.log('end', body);
+      let status = 404;
+
+      const response = {
+        success: false,
+        data: null,
+        error: null,
+      };
+
+      if (method === 'GET' && url === '/todos') {
+        status = 200;
+        response.success = true;
+        response.data = todos;
+      } else if (method === 'POST' && url === '/todos') {
+        const { id, text } = JSON.parse(body);
+        if (!id || !text) {
+          status = 400;
+          response.error = 'Please add id in text';
+        } else {
+          status = 201;
+          todos.push({ id, text });
+          response.success = true;
+        }
+
+        response.data = todos;
+      }
+
+      res.writeHead(status, {
+        'Content-type': 'application/json',
+      });
+      res.end(JSON.stringify(response));
     });
 
   console.log(req.headers.authorization);
-  res.end(
-    JSON.stringify({
-      success: true,
-      data: todos,
-    })
-  );
 });
 const PORT = 5000;
 

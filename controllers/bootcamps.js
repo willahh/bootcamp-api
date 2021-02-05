@@ -2,7 +2,9 @@
 // @route  GET /api/v1/bootcamps
 // @access Public
 exports.getBootCamps = (req, res, next) => {
-  res.status(200).json({ success: true, msg: 'Show all bootcamps' });
+  res
+    .status(200)
+    .json({ success: true, msg: 'Show all bootcamps', hello: req.hello });
 };
 
 // @desc   Get single bootcamp
@@ -32,5 +34,7 @@ exports.updateBootcamp = (req, res, next) => {
 // @route  DELETE /api/v1/bootcamps/:id
 // @access Private
 exports.deleteBootcamp = (req, res, next) => {
-  res.status(200).json({ success: true, msg: `Delete bootcamp ${req.params.id}` });
+  res
+    .status(200)
+    .json({ success: true, msg: `Delete bootcamp ${req.params.id}` });
 };

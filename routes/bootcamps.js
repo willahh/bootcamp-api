@@ -1,5 +1,6 @@
 const express = require('express');
 const {
+  getBootCamps,
   getBootCamp,
   createBootCamp,
   updateBootcamp,
@@ -8,7 +9,7 @@ const {
 
 const router = express.Router();
 
-router.route('/').get(getBootCamp).post(createBootCamp);
+router.route('/').get(getBootCamps).post(createBootCamp);
 router
   .route('/:id')
   .get(getBootCamp)

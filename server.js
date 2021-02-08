@@ -1,5 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
+dotenv.config({ path: './config/config.env' });
+
 const bootcamps = require('./routes/bootcamps');
 const logger = require('./middleware/logger');
 const morgan = require('morgan');
@@ -8,7 +10,6 @@ const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
 
 // Load en vars
-dotenv.config({ path: './config/config.env' });
 
 // Connect to database
 connectDB();
